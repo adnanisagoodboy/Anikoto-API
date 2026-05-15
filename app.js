@@ -1,5 +1,8 @@
 const path = require('path')
 const express = require('express');
+const morgan = require('morgan');
+
+//middleware
 const schedule = require('./mwr/schedule');
 const id = require('./mwr/id');
 const ep = require('./mwr/ep');
@@ -7,7 +10,7 @@ const info = require("./mwr/info");
 const app = express();
 const PORT =  process.env.PORT || 3000;
 app.set('trust proxy', 1);
-
+app.use(morgan('combined'));
 const { rateLimit, ipKeyGenerator } = require('express-rate-limit');
 
 const globalLimiter = rateLimit({
