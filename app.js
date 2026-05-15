@@ -2,6 +2,7 @@ const express = require('express');
 const schedule = require('./mwr/schedule');
 const id = require('./mwr/id');
 const ep = require('./mwr/ep');
+const info = require("./mwr/info");
 const app = express();
 const PORT =  process.env.PORT || 3000;
 
@@ -36,4 +37,9 @@ app.get("/episodes",async (req,res)=>{
     const ID = req.query.id;
     const Ep = await ep(ID);
     res.json(Ep)
+})
+app.get("/info",async (req,res)=>{
+    const name = req.query.name;
+    const info = await info(name);
+    res.json(info);
 })
