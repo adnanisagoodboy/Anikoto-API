@@ -1,167 +1,125 @@
-# 🚀 Anikoto API Server
+# 🚀 Anikoto API
 
-A powerful, fast, and clean **unofficial API** for [anikototv.to](https://anikototv.to) built with **Express.js + Cheerio**.
+A **fast, reliable, and well-documented** unofficial REST API for [anikototv.to](https://anikototv.to) built with **Express.js + Cheerio**.
 
-Scrape anime schedules, episode lists, detailed anime information, and more — all returned in clean, structured JSON.
+Scrape anime schedules, episode lists, and rich anime details in clean JSON format.
 
-![Node.js](https://img.shields.io/badge/Node.js-18+-green)
-![Express](https://img.shields.io/badge/Express-4.x-blue)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?style=for-the-badge&logo=node.js)
+![Express](https://img.shields.io/badge/Express-4.x-blue?style=for-the-badge&logo=express)
+![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
+![Version](https://img.shields.io/badge/Version-1.0.0-purple?style=for-the-badge)
 
 ---
 
 ## ✨ Features
 
-- 📅 **Daily Anime Schedule** with proper date validation
-- 🎞️ **Full Episode List** with `data-id`, titles, and timestamps
-- 📊 **Rich Anime Information** (`/info`) — title, poster, synopsis, genres, studios, etc.
-- 🔍 Extract `data-id` from any watch page
-- 🧹 Clean & well-structured JSON responses
-- ✅ Strong input validation using **dayjs**
-- 🛡️ Spam/ad removal from synopsis
-- 📱 Mobile-friendly & fast
+-  **Daily & Custom Date Schedule** with proper validation
+-  Complete **Episode Lists** with `data-id`, titles & streaming info
+-  **Rich Anime Details** (`/info`) — posters, synopsis, metadata, genres, studios
+-  Extract `data-id` from any watch page
+-  Built-in Rate Limiting & Security
+-  Lightweight, fast & optimized responses
+-  Fully responsive & mobile-friendly
 
 ---
 
-## 🛠️ Installation
+## 🛠️ Quick Start
 
 ```bash
-git clone https://github.com/Arisu-Yamabuki/Anikoto-API
-cd anikoto-api
+git clone https://github.com/Arisu-Yamabuki/Anikoto-API.git
+cd Anikoto-API
 npm install
-```
-
----
-
-## 🚀 Quick Start
-
-```bash
 npm start
-# or
-node app.js
 ```
 
-Server will start at **http://localhost:3000**
+Server runs at **http://localhost:3000**
+
+**Live Demo:** [https://anikoto-api.onrender.com](https://anikoto-api.onrender.com)
 
 ---
 
 ## 📡 API Endpoints
 
-### 1. Get Anime Schedule
+| Method | Endpoint                    | Description                        | Query Params       |
+|--------|-----------------------------|------------------------------------|--------------------|
+| GET    | `/`                         | Home & Documentation               | -                  |
+| GET    | `/schedule`                 | Get anime schedule                 | `date` (YYYY-MM-DD)|
+| GET    | `/episodes`                 | Get all episodes of an anime       | `id`               |
+| GET    | `/info`                     | Get detailed anime information     | `url`              |
+| GET    | `/page`                     | Extract `data-id` from slug        | `name`             |
 
+---
+
+### Example Requests
+
+**1. Schedule**
 ```http
 GET /schedule?date=2026-05-18
 ```
 
-**Example Response:**
-```json
-{
-  "success": true,
-  "date": "2026-05-18",
-  "total": 12,
-  "schedule": [
-    {
-      "time": "09:30",
-      "episode": "Episode 7",
-      "title": "Farming Life in Another World Season 2",
-      "titleJapanese": "Isekai Nonbiri Nouka 2",
-      "url": "https://anikototv.to/watch/..."
-    }
-  ]
-}
+**2. Anime Info (Recommended)**
+```http
+GET /info?name=one-piece-odmau
 ```
 
-### 2. Get Episode List
-
+**3. Episodes**
 ```http
 GET /episodes?id=1642
 ```
-
-Returns all episodes with `data_id`, episode number, title, etc.
-
-### 3. Get Detailed Anime Info (Recommended)
-
-```http
-GET /info?url=https://anikototv.to/watch/one-piece-odmau
-```
-
-Returns rich data from `#w-info`:
-- Title (EN + JP)
-- Poster image
-- Clean synopsis (spam removed)
-- Rating, Type, Status, Aired, Duration
-- Genres, Studios, Producers
-
-### 4. Get Anime ID
-
-```http
-GET /page?name=one-piece-odmau
-```
-
-### 5. Home / Documentation
-
-Just visit `https://anikoto-api.onrender.com/` or `http://localhost:3000` for beautiful documentation.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Node.js** + **Express**
+- **Node.js** + **Express.js**
 - **Axios** — HTTP requests
 - **Cheerio** — HTML parsing
-- **Day.js** — Date handling & validation
+- **dayjs** — Date & time handling
+- **express-rate-limit** — Rate limiting & security
 
 ---
 
 ## 📁 Project Structure
 
-```
-anikoto-api/
-├── app.js
+```bash
+Anikoto-API/
+├── app.js                 # Main server
 ├── package.json
 ├── README.md
 └── mwr/
-    └── ep.js
+    ├── schedule.js
+    ├── ep.js
+    ├── info.js
     └── id.js
-    └── info.js
-    └── schedule.js
 ```
-
----
-
-## ⚙️ Configuration
-
-You can easily modify headers, base URL, or add caching in `app.js`.
 
 ---
 
 ## ⚠️ Disclaimer
 
-This project is for **educational and personal use only**.  
-It scrapes data from anikototv.to. Please respect the website’s terms of service and use responsibly.
+This is an **unofficial** API for educational and personal use only.  
+This project is not affiliated with anikototv.to. Please respect their terms of service and use responsibly.
 
 ---
 
 ## 🤝 Contributing
 
-Contributions, issues, and feature requests are welcome!
+Contributions, bug reports, and feature requests are **highly welcome**!
 
 1. Fork the project
-2. Create your feature branch
-3. Commit your changes
-4. Push & open a Pull Request
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 
 ## 📄 License
 
-Distributed under the **MIT License**.
+Distributed under the **GPL3 License**.
 
 ---
 
-**Made with ❤️ for anime lovers**
+**Made with ❤️ for the anime community**
 
----
-
-**Star this repo if you found it useful!** ⭐
-
+**If you like this project, please give it a star!** ⭐

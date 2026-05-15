@@ -1,3 +1,4 @@
+const path = require('path')
 const express = require('express');
 const schedule = require('./mwr/schedule');
 const id = require('./mwr/id');
@@ -5,6 +6,27 @@ const ep = require('./mwr/ep');
 const info = require("./mwr/info");
 const app = express();
 const PORT =  process.env.PORT || 3000;
+app.set('trust proxy', 1);
+
+const { rateLimit, ipKeyGenerator } = require('express-rate-limit');
+
+const globalLimiter = rateLimit({
+    windowMs: 60 * 1000,       
+    max: 30,                    
+    message: {
+        success: false,
+        error: "Too many requests. Please slow down."
+    },
+    standardHeaders: true,
+    legacyHeaders: false,
+    
+
+    keyGenerator: (req) => ipKeyGenerator(req.ip),
+    
+    
+});
+
+app.use(globalLimiter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -16,11 +38,7 @@ app.listen(PORT,(err)=>{
     console.log("Server listening on " + "PORT: " + PORT)
 })
 app.get("/",(req,res)=>{
-    res.json({
-        Schedule : "/schedule?time=",
-        Ep:"/episodes?id=",
-        Id:"/page?name="        
-    })
+   res.sendFile(path.join(__dirname,"index.html"))
 })
 
 app.get("/schedule",async (req,res)=>{
