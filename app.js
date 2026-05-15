@@ -40,6 +40,6 @@ app.get("/episodes",async (req,res)=>{
 })
 app.get("/info",async (req,res)=>{
     const name = req.query.name;
-    const info = await info(name);
-    res.json(info);
+    const Info = await info(name);
+    res.json(Info);
 })
