@@ -6,7 +6,6 @@ Scrape anime schedules, episode lists, and rich anime details in clean JSON form
 
 ![Node.js](https://img.shields.io/badge/Node.js-18%2B-green?style=for-the-badge&logo=node.js)
 ![Express](https://img.shields.io/badge/Express-4.x-blue?style=for-the-badge&logo=express)
-![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)
 ![Version](https://img.shields.io/badge/Version-1.0.0-purple?style=for-the-badge)
 
 ---
